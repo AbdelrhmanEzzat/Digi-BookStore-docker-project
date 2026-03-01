@@ -1,3 +1,4 @@
+#hello
 # ─── Stage 1: Builder ────────────────────────────────────
 FROM python:3.11-alpine AS builder
 WORKDIR /build
