@@ -1,0 +1,26 @@
+Browser
+   │
+   │  HTTPS :443
+   ▼
+┌─────────────────────────────┐
+│          NGINX              │  ← SSL Termination
+│   Load Balancer + Rate Limit│    Static Files
+│         + Gzip              │    HTTP→HTTPS Redirect
+└──────────┬──────────────────┘
+           │ least_conn
+     ┌─────┴─────┐
+     │           │
+     ▼           ▼
+┌─────────┐ ┌─────────┐
+│ flask1  │ │ flask2  │  ← Gunicorn 2 workers each
+│ :8000   │ │ :8000   │    Non-root user
+└────┬────┘ └────┬────┘    HEALTHCHECK
+     └─────┬─────┘
+           │
+     ┌─────┴─────┐
+     │           │
+     ▼           ▼
+┌──────────┐ ┌──────────┐
+│PostgreSQL│ │  Redis   │  ← Persistent Volumes
+│  :5432   │ │  :6379   │    Health Checks
+└──────────┘ └──────────┘
