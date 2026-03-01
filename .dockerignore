@@ -1,0 +1,11 @@
+.git/
+.env
+.env.example
+ssl/
+conf/
+docker-compose*.yml
+__pycache__/
+*.pyc
+*.md
+init.sql
+push.sh
